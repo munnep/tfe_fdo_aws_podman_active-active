@@ -1,6 +1,6 @@
-output "ssh_tf_client" {
-  value = "ssh ubuntu@${var.dns_hostname}-client.${var.dns_zonename}"
-}
+# output "ssh_tf_client" {
+#   value = "ssh ubuntu@${var.dns_hostname}-client.${var.dns_zonename}"
+# }
 
 # output "tfe_netdata_performance_dashboard" {
 #   value = "http://${var.dns_hostname}.${var.dns_zonename}:19999"
@@ -18,7 +18,12 @@ data "aws_instances" "foo" {
 }
 
 output "ssh_tfe_server" {
-  value = [
-    for k in data.aws_instances.foo.private_ips : "ssh -J ubuntu@${var.dns_hostname}-client.${var.dns_zonename} ubuntu@${k}"
-  ]
+  value = data.aws_instances.foo.ids
+}
+
+output "tfe_server_connection" {
+  value = join("\n", [
+    "# Make a connection using doormat. For example",
+    "doormat session --account aws_patrick.munne_test --region ${var.region}"
+  ])
 }
