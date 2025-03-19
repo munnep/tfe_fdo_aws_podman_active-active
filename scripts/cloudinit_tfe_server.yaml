@@ -39,6 +39,8 @@ write_files:
             value: "true"
           - name: "TFE_ENCRYPTION_PASSWORD"
             value: "Password#1"
+          - name: "TFE_IACT_SUBNETS"
+            value: "0.0.0.0/0"            
 
           # redis
           - name: TFE_REDIS_HOST
